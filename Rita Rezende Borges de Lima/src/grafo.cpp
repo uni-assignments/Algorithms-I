@@ -4,7 +4,7 @@
 #include <set>
 #include <string.h>
 #include <queue>
-#include <functional>
+#include <assert.h>
 
 using namespace std;
 
@@ -18,7 +18,7 @@ Grafo::Grafo(int qtd_v){
     vis = (int*)calloc(this->qtd_vertices, sizeof(int));  // aloca e inicializa nosso vetor de visitados com 0
     
     dist = (int*)malloc(this->qtd_vertices*sizeof(int));  // aloca e iniciliza nosso vetor de distancia com infinito
-    memset(dist, INF, sizeof dist);
+    memset(dist, INF, sizeof(*dist));
 }
 
 Grafo::~Grafo(){
@@ -60,9 +60,12 @@ void Grafo::dfs(int v){
 void Grafo::procura_ciclo(vector<int> &centros){
     possui_ciclo = false;
 
-    memset(vis, 0, sizeof vis); // Zera o vetor de visitados
-    for(auto c: centros){        // Para cada um de nossos centros faz uma busca em profundidade (que pode ser entendida no exemplo como a rota)
+    memset(vis, 0, sizeof(*vis)); // Zera o vetor de visitados
 
+    for(int i = 0; i < this->qtd_vertices; i++) 
+        assert(vis[0] == 0);
+
+    for(auto c: centros){        // Para cada um de nossos centros faz uma busca em profundidade (que pode ser entendida no exemplo como a rota)
         if(vis[c] == 0) dfs(c);    
     }
 
