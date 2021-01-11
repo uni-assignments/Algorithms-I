@@ -19,7 +19,7 @@ class Grafo {
         ~Grafo();
 
         set<int> bfs_multi_source(std::vector<int> centros, int max);        
-        bool has_cycle(vector<int> src);
+
         void procura_ciclo(vector<int> &centros);
         void dfs(int v);
 
