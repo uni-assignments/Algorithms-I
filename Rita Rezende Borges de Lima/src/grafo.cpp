@@ -15,19 +15,17 @@ Grafo::Grafo(int qtd_v){
     qtd_vertices = qtd_v;
     
     lista_adjacencia.resize(qtd_vertices);                // inicializa a lista de adjacencia com seu respectivo tamanho
-    
-    vis = (int*)calloc(this->qtd_vertices, sizeof(int));  // aloca e inicializa nosso vetor de visitados com 0
-    
+        
     dist = (int*)malloc(this->qtd_vertices*sizeof(int));  // aloca e iniciliza nosso vetor de distancia com infinito
     memset(dist, INF, sizeof(*dist));
 }
 
 Grafo::~Grafo(){
-    free(vis); free(dist); // ao final do programa libera memoria
+    free(dist); // ao final do programa libera memoria
 }
 
 // Busca em largura onde temos CD vertices iniciais passados pelo usuario
-set<int> Grafo::bfs_multi_source(vector<int> centros, int max){    
+set<int> Grafo::bfs_multi_source(vector<int> centros, int max, vector<int> vis){    
     set<int> resp;
     queue<int> q;
     for(auto c: centros){
@@ -46,48 +44,29 @@ set<int> Grafo::bfs_multi_source(vector<int> centros, int max){
     return resp;
 }
 
-void Grafo::dfs(int v){
-    vis[v] = 1;
+void Grafo::dfs(int v, vector<int> visi){
+    visi[v] = 1;
     for(auto p: this->lista_adjacencia[v]){
-        if(vis[p] == 0) dfs(p);
-        else if(vis[p] == 1){           // Caso durante a rota chegue em um vertice ja visitado significa que a rota não é ótima
+        if(visi[p] == 0) dfs(p, visi);
+        else if(visi[p] == 1){           // Caso durante a rota chegue em um vertice ja visitado significa que a rota não é ótima
             possui_ciclo = true;        // Marca a flag
         }
     }
-    vis[v] = 2;
+    visi[v] = 2;
 }
 
 // Para cada um de nossos centros 
 void Grafo::procura_ciclo(vector<int> &centros){
     possui_ciclo = false;
 
-    memset(vis, 0, sizeof(*vis)); // Zera o vetor de visitados
+    vector<int> visi(this->qtd_vertices,0);
 
     for(int i = 0; i < this->qtd_vertices; i++) 
-        assert(vis[0] == 0);
+        assert(visi[0] == 0);
 
     for(auto c: centros){        // Para cada um de nossos centros faz uma busca em profundidade (que pode ser entendida no exemplo como a rota)
-        if(vis[c] == 0) dfs(c);    
+        if(visi[c] == 0) dfs(c, visi);    
     }
 
     cout << possui_ciclo << endl;
-}
-
-bool Grafo::has_cycle(vector<int> src) {
-    vector<int> stage(this->qtd_vertices,0);
- 
-    possui_ciclo = false;
-    vector<vector<int>>g = lista_adjacencia;
-    function<void(int)> dfs = [&] (int v) {
-        stage[v] = 1;
-        for(int u : g[v]) {
-            if(stage[u] == 0) dfs(u);
-            else if(stage[u] == 1) possui_ciclo = true;
-        }
-        stage[v] = 2;
-    };
- 
-    for(int v : src) if(stage[v] == 0) dfs(v);
- 
-    return possui_ciclo;
 }

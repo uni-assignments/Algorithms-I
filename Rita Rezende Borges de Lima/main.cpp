@@ -51,16 +51,16 @@ int main (){
 
     Grafo *g = new Grafo(qtd_centros + qtd_postos);
     vector<int> centros;
+    vector<int> visi(qtd_centros+qtd_postos,0);
     
     // le as arestas do grafo (rotas entre postos e centros de distribuicao)
     le_entrada(qtd_centros, qtd_postos, centros, g);
     
     //Imprime a quantidade e quais postos foram alcancados com as variaveis passadas pelo usuario
-    postos_alcancados(qtd_centros, g->bfs_multi_source(centros, 30/incremento_temp));
+    postos_alcancados(qtd_centros, g->bfs_multi_source(centros, 30/incremento_temp, visi));
     
     //Verifica se o grafo possui ciclo, se tiver imprime 1, caso contrario imprime 0
-    //g->procura_ciclo(centros);
-    cout << g->has_cycle(centros)<< endl;
+    g->procura_ciclo(centros);
     delete g;
 
 }

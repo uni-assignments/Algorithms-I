@@ -10,7 +10,6 @@ class Grafo {
 
     private:
         int qtd_vertices;          // Quantidade de vértives = qtd de postos + qtd de centros de distribuicao
-        int *vis;                  // Se o vértica foi visitado ou não
         int *dist;                 // Distancia de cada posto ao centro de distribuicao mais proximo
         bool possui_ciclo = false; // Flag que diz se nossas rotas são ótimas
 
@@ -18,11 +17,10 @@ class Grafo {
         Grafo(int qtd_vertices);
         ~Grafo();
 
-        set<int> bfs_multi_source(std::vector<int> centros, int max);        
+        set<int> bfs_multi_source(vector<int> centros, int max, vector<int> vis);        
 
         void procura_ciclo(vector<int> &centros);
-        void dfs(int v);
-        bool has_cycle(vector<int> src);
+        void dfs(int v, vector<int> visi);
         vector<vector<int>> lista_adjacencia;
 };
 
