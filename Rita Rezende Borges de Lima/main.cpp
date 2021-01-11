@@ -61,7 +61,6 @@ int main (){
     //Verifica se o grafo possui ciclo, se tiver imprime 1, caso contrario imprime 0
     g->procura_ciclo(centros);
 
-    // cout << g->has_cycle(centros) << endl;
     delete g;
-    
+
 }
