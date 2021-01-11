@@ -63,5 +63,5 @@ int main (){
 
     // cout << g->has_cycle(centros) << endl;
     delete g;
-
+    
 }

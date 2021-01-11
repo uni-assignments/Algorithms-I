@@ -18,7 +18,7 @@ Grafo::Grafo(int qtd_v){
     vis = (int*)calloc(this->qtd_vertices, sizeof(int));  // aloca e inicializa nosso vetor de visitados com 0
     
     dist = (int*)malloc(this->qtd_vertices*sizeof(int));  // aloca e iniciliza nosso vetor de distancia com infinito
-    memset(dist, INF, sizeof(dist));
+    memset(dist, INF, sizeof dist);
 }
 
 Grafo::~Grafo(){
@@ -60,31 +60,11 @@ void Grafo::dfs(int v){
 void Grafo::procura_ciclo(vector<int> &centros){
     possui_ciclo = false;
 
-    memset(vis, 0, sizeof(vis)); // Zera o vetor de visitados
+    memset(vis, 0, sizeof vis); // Zera o vetor de visitados
     for(auto c: centros){        // Para cada um de nossos centros faz uma busca em profundidade (que pode ser entendida no exemplo como a rota)
 
         if(vis[c] == 0) dfs(c);    
     }
 
     cout << possui_ciclo << endl;
-}
-
-bool Grafo::has_cycle(vector<int> src) {
-
-    bool cycle = false;
-    
-    vector<vector<int>>g = this->lista_adjacencia;
-    function<void(int)> dfss = [&] (int v) {
-        vis[v] = 1;
-        for(int u : g[v]){
-            if(vis[u] == 0) dfs(u);
-            else if(vis[u] == 1) cycle = true;
-        }
-        vis[v] = 2;
-    };
- 
-    for(int v : src) {
-        if(vis[v] == 0) dfss(v);
-    }
-    return cycle;
 }
