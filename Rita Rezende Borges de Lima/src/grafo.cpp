@@ -5,6 +5,7 @@
 #include <string.h>
 #include <queue>
 #include <assert.h>
+#include <functional>
 
 using namespace std;
 
@@ -48,7 +49,7 @@ set<int> Grafo::bfs_multi_source(vector<int> centros, int max){
 void Grafo::dfs(int v){
     vis[v] = 1;
     for(auto p: this->lista_adjacencia[v]){
-        if(vis[p] == 0) return dfs(p);
+        if(vis[p] == 0) dfs(p);
         else if(vis[p] == 1){           // Caso durante a rota chegue em um vertice ja visitado significa que a rota não é ótima
             possui_ciclo = true;        // Marca a flag
         }
@@ -70,4 +71,23 @@ void Grafo::procura_ciclo(vector<int> &centros){
     }
 
     cout << possui_ciclo << endl;
+}
+
+bool Grafo::has_cycle(vector<int> src) {
+    vector<int> stage(this->qtd_vertices,0);
+ 
+    possui_ciclo = false;
+    vector<vector<int>>g = lista_adjacencia;
+    function<void(int)> dfs = [&] (int v) {
+        stage[v] = 1;
+        for(int u : g[v]) {
+            if(stage[u] == 0) dfs(u);
+            else if(stage[u] == 1) possui_ciclo = true;
+        }
+        stage[v] = 2;
+    };
+ 
+    for(int v : src) if(stage[v] == 0) dfs(v);
+ 
+    return possui_ciclo;
 }

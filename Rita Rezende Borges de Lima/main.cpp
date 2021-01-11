@@ -59,8 +59,8 @@ int main (){
     postos_alcancados(qtd_centros, g->bfs_multi_source(centros, 30/incremento_temp));
     
     //Verifica se o grafo possui ciclo, se tiver imprime 1, caso contrario imprime 0
-    g->procura_ciclo(centros);
-
+    //g->procura_ciclo(centros);
+    cout << g->has_cycle(centros)<< endl;
     delete g;
 
 }

@@ -9,10 +9,10 @@ using namespace std;
 class Grafo {
 
     private:
-        int qtd_vertices;  // Quantidade de vértives = qtd de postos + qtd de centros de distribuicao
-        int *vis;          // Se o vértica foi visitado ou não
-        int *dist;         // Distancia de cada posto ao centro de distribuicao mais proximo
-        bool possui_ciclo; // Flag que diz se nossas rotas são ótimas
+        int qtd_vertices;          // Quantidade de vértives = qtd de postos + qtd de centros de distribuicao
+        int *vis;                  // Se o vértica foi visitado ou não
+        int *dist;                 // Distancia de cada posto ao centro de distribuicao mais proximo
+        bool possui_ciclo = false; // Flag que diz se nossas rotas são ótimas
 
     public:
         Grafo(int qtd_vertices);
@@ -22,7 +22,7 @@ class Grafo {
 
         void procura_ciclo(vector<int> &centros);
         void dfs(int v);
-
+        bool has_cycle(vector<int> src);
         vector<vector<int>> lista_adjacencia;
 };
 
