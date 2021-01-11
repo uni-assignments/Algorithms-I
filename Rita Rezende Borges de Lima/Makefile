@@ -3,20 +3,16 @@ CFLAGS=-Wall -Wextra
 EXEC=./tp01
 TMPOUT=tp01.testresult
 
-$(EXEC): main.cpp binary_tree.o node.o
-	$(CC) $(CFLAGS) main.cpp binary_tree.o node.o -o $(EXEC)
+$(EXEC): main.cpp grafo.o
+	$(CC) $(CFLAGS) main.cpp grafo.o -o $(EXEC)
 
-binary_tree.o: binary_tree.cpp 
-	$(CC) $(CFLAGS) -c binary_tree.cpp -o binary_tree.o
-
-node.o: node.cpp 
-	$(CC) $(CFLAGS) -c node.cpp -o node.o
+grafo.o: ./src/grafo.cpp 
+	$(CC) $(CFLAGS) -c ./src/grafo.cpp -o grafo.o
 
 test: $(EXEC)
 	@bash ./run_tests.sh $(EXEC) $(TMPOUT)
 
 clean: # remove todos os arquivos temporarios que forem gerados pela compilacao
-	rm -rf binary_tree.o
-	rm -rf node.o
+	rm -rf grafo.o
 	rm -rf tp01.testresult
 	rm -rf tp01
