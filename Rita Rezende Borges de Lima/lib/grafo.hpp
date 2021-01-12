@@ -19,7 +19,7 @@ class Grafo {
 
         set<int> bfs_multi_source(vector<int> centros, int max, vector<int> vis);        
 
-        void procura_ciclo(vector<int> &centros);
+        void procura_ciclo(vector<int> centros);
         void dfs(int v, vector<int> visi);
         vector<vector<int>> lista_adjacencia;
 };

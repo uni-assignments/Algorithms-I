@@ -30,7 +30,7 @@ void le_entrada(int qtd_centros, int qtd_postos, vector<int> &centros, Grafo *g)
     }
 }
 
-void postos_alcancados(int qtd_centros, set<int> resp){
+void imprime_postos_alcancados(int qtd_centros, set<int> resp){
     set<int>::iterator it;
 
     // Imprime o tamanho de nosso set, ou seja a quantidade de postos alcancados
@@ -56,8 +56,11 @@ int main (){
     // le as arestas do grafo (rotas entre postos e centros de distribuicao)
     le_entrada(qtd_centros, qtd_postos, centros, g);
     
+    // Acha os postos que foram alcancados
+    set<int> postos_alcancados = g->bfs_multi_source(centros, 30/incremento_temp, visi);
+    
     //Imprime a quantidade e quais postos foram alcancados com as variaveis passadas pelo usuario
-    postos_alcancados(qtd_centros, g->bfs_multi_source(centros, 30/incremento_temp, visi));
+    imprime_postos_alcancados(qtd_centros, postos_alcancados);
     
     //Verifica se o grafo possui ciclo, se tiver imprime 1, caso contrario imprime 0
     g->procura_ciclo(centros);

@@ -56,13 +56,10 @@ void Grafo::dfs(int v, vector<int> visi){
 }
 
 // Para cada um de nossos centros 
-void Grafo::procura_ciclo(vector<int> &centros){
+void Grafo::procura_ciclo(vector<int> centros){
     possui_ciclo = false;
 
-    vector<int> visi(this->qtd_vertices,0);
-
-    for(int i = 0; i < this->qtd_vertices; i++) 
-        assert(visi[0] == 0);
+    vector<int> visi(this->qtd_vertices, 0);
 
     for(auto c: centros){        // Para cada um de nossos centros faz uma busca em profundidade (que pode ser entendida no exemplo como a rota)
         if(visi[c] == 0) dfs(c, visi);    
