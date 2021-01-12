@@ -51,13 +51,12 @@ int main (){
 
     Grafo *g = new Grafo(qtd_centros + qtd_postos);
     vector<int> centros;
-    vector<int> visi(qtd_centros+qtd_postos,0);
     
     // le as arestas do grafo (rotas entre postos e centros de distribuicao)
     le_entrada(qtd_centros, qtd_postos, centros, g);
     
     // Acha os postos que foram alcancados
-    set<int> postos_alcancados = g->bfs_multi_source(centros, 30/incremento_temp, visi);
+    set<int> postos_alcancados = g->bfs_multi_source(centros, 30/incremento_temp);
     
     //Imprime a quantidade e quais postos foram alcancados com as variaveis passadas pelo usuario
     imprime_postos_alcancados(qtd_centros, postos_alcancados);

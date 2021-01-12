@@ -17,7 +17,7 @@ class Grafo {
         Grafo(int qtd_vertices);
         ~Grafo();
 
-        set<int> bfs_multi_source(vector<int> centros, int max, vector<int> vis);        
+        set<int> bfs_multi_source(vector<int> centros, int max);        
 
         void procura_ciclo(vector<int> centros);
         void dfs(int v, vector<int> visi);

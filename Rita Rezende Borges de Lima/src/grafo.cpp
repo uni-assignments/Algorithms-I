@@ -25,8 +25,9 @@ Grafo::~Grafo(){
 }
 
 // Busca em largura onde temos CD vertices iniciais passados pelo usuario
-set<int> Grafo::bfs_multi_source(vector<int> centros, int max, vector<int> vis){    
+set<int> Grafo::bfs_multi_source(vector<int> centros, int max){    
     set<int> resp;
+    vector<int> vis(qtd_vertices,0);
     queue<int> q;
     for(auto c: centros){
         q.push(c);  //adicionamos nossos centros iniciais na fila 
