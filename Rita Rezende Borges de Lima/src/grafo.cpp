@@ -45,6 +45,7 @@ set<int> Grafo::bfs_multi_source(vector<int> centros, int max){
     return resp;
 }
 
+// Busca em profundidade a partir de um vértice previamente escolhido v
 void Grafo::dfs(int v, vector<int> visi){
     visi[v] = 1;
     for(auto p: this->lista_adjacencia[v]){
