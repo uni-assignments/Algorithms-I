@@ -1,5 +1,5 @@
 CC=g++ 
-CFLAGS=-Wall -Wextra
+CFLAGS=-std=gnu++1z -Wall -Wextra
 EXEC=./tp01
 TMPOUT=tp01.testresult
 
