@@ -19,7 +19,7 @@ vector<int> dijkstra(vector<vector<Edge>> graph, int ini){
             dist[ui] = dist[vw] + uw;
             pq.push(make_pair(-uw, ui));
         } 
-    }
+    }   
     return dist;
 }
 
