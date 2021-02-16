@@ -1,25 +1,32 @@
 #include <bits/stdc++.h>
 #include "lib/grafo.hpp"
+#include "lib/dsu.hpp"
 
 using namespace std;
 
 
-Graph *read_and_insert_in_graph(){
-    int vertices, edges; cin >> vertices >> edges;
-    Graph *g = new Graph(vertices);
+void read_and_insert_in_structures(Graph *g, int n_vertices, int n_edges){
+    int v1, v2, w;
+    vector<int> values(n_vertices);
     
-    
-    int a, b, w;
-    for (size_t i = 0; i < vertices; i++){
-        cin >> a >> b >> w;
-        (*g)[a].push_back(Edge(b, w));
-        (*g)[b].push_back(Edge(a, w));
+    for(auto &v: values) cin >> v;    
+    for (int i = 0; i < n_edges; i++){
+        cin >> v1 >> v2 >> w;
+        g->insert_edge(v1, v2, w, values[v1] + values[v2]);
     }
-    
-    return g;
 }
 
+
 int main(){
-    Graph *g = read_and_insert_in_graph();
-    g->prim();
+    int v, e; cin >> v >> e;
+    Graph *g = new Graph(v);
+    DSU *dsu = new DSU(v);
+    
+    read_and_insert_in_structures(g, v, e);   
+    pair<int,int> resp = g->kruskal(dsu);
+
+    cout << resp.first << " " << resp.second << endl;
+    g->print_awnser();
+
+    return 0;
 }

@@ -3,30 +3,42 @@
 
 using namespace std;
 
-const int INF = 0x3f3f3f3f;    
 
-Graph::Graph(int n_vertices_) : vector<vector<Edge>>(n_vertices_), n_vertices(n_vertices_) {}
-
-void Graph::set_values(){
-    values.resize(n_vertices);
-    for (auto &el: values) 
-        cin >> el;
+Graph::Graph(int n_v){
+    conections_in_mst.resize(n_v);
+    fill(conections_in_mst.begin(), conections_in_mst.end(), 0);
 }
 
-void Graph::prim(){
-    vector<int> dist(INF), pred(-1);
-    priority_queue<Edge> pq;
+void Graph::insert_edge(int v1, int v2, int w, int tour_value){
+    edges.emplace_back(w, tour_value, v1, v2);
+}
+
+void Graph::print_awnser(){
     
-    pq.push(make_pair(0, 0)), dist[0] = 0;
+    for(auto i: conections_in_mst) cout << i << " ";
+    cout << endl;
 
-    while(!pq.empty()){ //Quando não der mais para percorrer outros nós
-        auto [w, idx] = pq.top(); pq.pop(); //Pega elemento com menor distancia
-        if(-w > dist[idx]) continue; //Caso a distancia do caminho atual seja maior q a distancia calculada
-        //Se o vizinho tiver distancia calculada maior do que a do caminho atual
-        for(auto [neigh_w, neigh] : (*this)[idx]) if(neigh_w < dist[neigh]) {
-                dist[neigh] = neigh_w; //Atualizamos a distancia
-                pq.push(make_pair(-dist[neigh], neigh)); //Adicionamos o vizinho no Heap 
-                pred[neigh] = idx;
-        }
-    }
+    for(auto edge: mst)  cout << get<2>(edge) << " " << get<3>(edge) << " " << get<0>(edge) << endl;
+    cout << endl;
 }
+
+pair<int, int> Graph::kruskal(DSU *dsu){
+    
+    sort(edges.begin(), edges.end(), 
+        [](const tuple<int, int, int, int> &t1, const tuple<int, int, int, int> &t2) {
+            if(get<0>(t1) == get<0>(t2)) return get<1>(t1) > get<1>(t2); 
+            else return get<0>(t1) < get<0>(t2);// Sort according to smaller weight, then largest touristic value
+    });
+    
+    int cost = 0, touristic_value = 0;
+    for(auto[w, tv, v1, v2] : edges){
+        if(dsu->find(v1) != dsu->find(v2)){
+            dsu->uni(v1, v2);
+            touristic_value += tv, cost += w;
+            conections_in_mst[v1]++, conections_in_mst[v2]++;
+            mst.emplace_back(w, tv, v1, v2);
+        }
+    } 
+    
+    return make_pair(cost, touristic_value);
+}   

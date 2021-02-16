@@ -1,24 +1,24 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+#include "dsu.hpp"
 using namespace std;
 
-
-typedef pair<int, int> Edge; // weight, index
-
-class Graph : vector<vector<Edge>>{
+class Graph {
 
     private:
-        int n_vertices;
-        vector<int> values;
+        vector<tuple<int, int, int, int >> edges; // weight, touristic attractiveness, vertex 1, vertex 2
+        vector<int> conections_in_mst;
+        vector<tuple<int, int, int, int >> mst;
     
     public:
         Graph(int n_vertices);
-        void set_values();
-        void prim();
-        
         ~Graph();
+
+        void insert_edge(int v1, int v2, int w, int tour_value);
+        void print_awnser();
+        pair<int, int> kruskal(DSU *dsu);
 
 };
 
