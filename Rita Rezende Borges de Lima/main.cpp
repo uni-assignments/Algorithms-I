@@ -26,7 +26,7 @@ int main(){
     pair<int,int> resp = g->kruskal(dsu);
 
     cout << resp.first << " " << resp.second << endl;
-    g->print_awnser();
+    g->print_answer();
 
     return 0;
 }

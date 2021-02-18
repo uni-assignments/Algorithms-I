@@ -17,7 +17,7 @@ class Graph {
         ~Graph();
 
         void insert_edge(int v1, int v2, int w, int tour_value);
-        void print_awnser();
+        void print_answer();
         pair<int, int> kruskal(DSU *dsu);
 
 };

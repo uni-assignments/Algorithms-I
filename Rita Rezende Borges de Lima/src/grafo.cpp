@@ -13,7 +13,7 @@ void Graph::insert_edge(int v1, int v2, int w, int tour_value){
     edges.emplace_back(w, tour_value, v1, v2);
 }
 
-void Graph::print_awnser(){
+void Graph::print_answer(){
     
     for(auto i: conections_in_mst) cout << i << " ";
     cout << endl;
