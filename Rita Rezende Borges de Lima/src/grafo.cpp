@@ -19,7 +19,6 @@ void Graph::print_answer(){
     cout << endl;
 
     for(auto edge: mst)  cout << get<2>(edge) << " " << get<3>(edge) << " " << get<0>(edge) << endl;
-    cout << endl;
 }
 
 pair<int, int> Graph::kruskal(DSU *dsu){
