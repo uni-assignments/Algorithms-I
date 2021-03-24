@@ -1,4 +1,4 @@
-CC=g++ 
+CC=g++ -std=c++17
 CFLAGS=-Wall -Wextra
 EXEC=./tp03
 TMPOUT=tp03.testresult

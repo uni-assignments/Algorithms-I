@@ -6,41 +6,37 @@ using namespace std;
 
 const long long INF = 0x3f3f3f3f;
 
-float minimum_value(int line, int d, vector<vector<pair<float, float>>> memo){
-    int min = 0;
-    for(int i = 0; i <= line && i < d; i++){
-        if(memo[line][i].second < memo[line][min].second) min = i;
-    }
-    return memo[line][min].second;
-}
-void print_memo(int d, int n, vector<vector<pair<float, float>>> memo){
+void print_memo(int d, int n, vector<vector<pair<double, double>>> memo){
     for(int i = 0; i < n; i++){
         for(int j = 0; j <= i or j < d; j++){
-            cout << memo[i][j].second <<" ";
+            cout << memo[i][j].first <<" ";
         }
         cout << endl;
     }
 }
-float minimum_cost(int n, int d, int t, vector<float> discounts, vector<pair<float, float>> subway_lines){
-    vector<vector<pair<float, float>>> memo(n, vector<pair<float, float>> (d));
-    
-    memo[0][0] = subway_lines[0];
+double minimum_cost(int n, int d, int t, vector<double> discounts, vector<pair<double, double>> subway_lines){
+    vector<vector<pair<double, double>>> memo(n, vector<pair<double, double>> (d));
+    vector<int> minimum_value(n, 0);
     memo[0][0] = make_pair(subway_lines[0].first, subway_lines[0].second * discounts[0]);
+    
     for(int i = 1; i < n; i++){
-        memo[i][0] = make_pair(subway_lines[i].first, subway_lines[i].second * discounts[0] + minimum_value(i-1, d, memo)); //primeira coluna o tempo 0, logo o tempo sera so o dql escala e o custo sera o menor custo
+        memo[i][0] = make_pair(subway_lines[i].first, subway_lines[i].second * discounts[0] + memo[i-1][minimum_value[i-1]].second); //primeira coluna o tempo 0, logo o tempo sera so o dql escala e o custo sera o menor custo
         for(int j = 1; j < d and j <= i; j++){ 
-            if(memo[i-1][j-1].first < t and memo[i-1][j-1].first >= 0)
+            if(memo[i-1][j-1].first < t and memo[i-1][j-1].first >= 0){
                 memo[i][j] = make_pair(subway_lines[i].first + memo[i-1][j-1].first, subway_lines[i].second * discounts[j] + memo[i-1][j-1].second);
+                if(memo[i][minimum_value[i]].second > memo[i][j].second)
+                    minimum_value[i] = j;
+            }
             else 
                 memo[i][j] = make_pair(-1, INF);
         }
     }
     //print_memo(d, n, memo);
-    return minimum_value(n - 1, d, memo);
+    return memo[n-1][minimum_value[n-1]].second;
 }
 
 
-vector<float> transform_discounts(vector<float> discounts, int d_sz){
+vector<double> transform_discounts(vector<double> discounts, int d_sz){
     for(int i = 1; i < d_sz; i++){
         discounts[i] += discounts[i-1];
         if(discounts[i] > 100.0) discounts[i] = 100.0;
@@ -56,11 +52,11 @@ int main(){
     int n, d, t;
     cin >> n >> d >> t;
     
-    vector<float> discounts(d);
-    vector<pair<float, float>> subway_lines(n); 
+    vector<double> discounts(d);
+    vector<pair<double, double>> subway_lines(n); 
     for (int i = 0; i < d; i++) cin >> discounts[i];
     
-    float time, price;
+    double time, price;
     for (int i = 0; i < n; i++) {
         cin >> time >> price;
         subway_lines[i] = make_pair(time, price);
