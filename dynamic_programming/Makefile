@@ -10,5 +10,5 @@ test: $(EXEC)
 	@bash ./run_tests.sh $(EXEC) $(TMPOUT)
 
 clean: # remove todos os arquivos temporarios que forem gerados pela compilacao
-	rm -rf tp02.testresult
-	rm -rf tp02
+	rm -rf tp03.testresult
+	rm -rf tp03
